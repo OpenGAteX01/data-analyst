@@ -257,12 +257,17 @@ Source: https://opendata.vancouver.ca/explore/embed/dataset/property-tax-report/
 Legal type	Tax 
 LAND	3717126.62
 STRATA	556507.85
+/
+
 ![image](https://github.com/user-attachments/assets/4bf76d1f-8ddc-4745-9cfc-8bb052db4505)
-
+/
 Step 1: Data Ingestion and Cleansing
-![image](https://github.com/user-attachments/assets/661b51d1-e45e-4f2c-9677-4f70f73efd4f)
-![image](https://github.com/user-attachments/assets/d7a4932b-bd3c-48e3-a32d-db856d979635)
 
+![image](https://github.com/user-attachments/assets/661b51d1-e45e-4f2c-9677-4f70f73efd4f)
+
+/
+![image](https://github.com/user-attachments/assets/d7a4932b-bd3c-48e3-a32d-db856d979635)
+/
 
 Using AWS Glue DataBrew, I performed the following tasks:
 
@@ -279,9 +284,10 @@ Due to the sensitivity of the property tax data, I implemented the following sec
     Backup and Replication: I established S3 replication rules to create an automatic backup of the S3 bucket in a different region. This ensured data redundancy in case of disasters or regional outages.
 
 Step 3: ETL Pipeline Development
+/
 ![image](https://github.com/user-attachments/assets/af6c712f-a862-463c-9d2e-55304e14c44a)
 
-
+/
 I used AWS Glue to automate the extraction, transformation, and loading (ETL) processes:
 
     Data transformation: Applied filtering to focus on 2024 data for the Limited Agriculture zone and aggregated tax levies based on legal type (LAND, STRATA).
@@ -289,23 +295,27 @@ I used AWS Glue to automate the extraction, transformation, and loading (ETL) pr
     Scheduled automation: The ETL pipeline was scheduled to run automatically, allowing new data to be processed and analyzed without manual intervention.
 
 Step 4: Data Governance and Privacy
+
 ![image](https://github.com/user-attachments/assets/a1c61e22-9027-484b-bc89-7cac4eecbb1d)
+/
 ![image](https://github.com/user-attachments/assets/32d84578-3ae9-42b4-b06c-bba3718e127c)
 
-
+/
 Data governance was a top priority for this project:
 
     I set up a trusted zone in the S3 bucket where only verified and validated data was stored after the ETL process.
     AWS Glue was used to continuously monitor data quality and ensure privacy standards were met, especially by detecting and eliminating sensitive information from the dataset.
     A visual ETL workflow was designed to provide real-time monitoring of jobs and transformations.
 
-Step 5: Data Analysis Using AWS Athena
+Step 5: Data Analysis Using AWS Athena.
+/
 ![image](https://github.com/user-attachments/assets/c9aec79e-b053-4d22-a04f-dfa0fda6a5e1)
-
+/
 ![image](https://github.com/user-attachments/assets/ba003650-ba22-4a11-9e1b-22028d9c34d4)
+/
 ![image](https://github.com/user-attachments/assets/99df89b6-f775-44a1-bbb8-17032e4291d1)
 
-
+/
 Once the data was prepared and loaded into the curated folder, I used AWS Athena for querying and analysis:
 
     The key analysis involved calculating the total tax levy for each legal type (LAND and STRATA).
@@ -322,8 +332,9 @@ Once the data was prepared and loaded into the curated folder, I used AWS Athena
     This allowed me to derive insights regarding tax distribution, which helped inform decisions about tax contributions across property types.
 
 Step 6: Data Visualization Using Amazon QuickSight
+/
 ![image](https://github.com/user-attachments/assets/dfce4c10-76df-4ca6-a39d-2b0959cd004d)
-
+/
 
 To make the data more accessible to stakeholders, I used Amazon QuickSight to create interactive visualizations:
 
@@ -339,9 +350,13 @@ Cost and sustainability were critical considerations for this project:
     By leveraging AWS-managed infrastructure, the solution helped reduce the carbon footprint by optimizing energy consumption and relying on AWS's sustainable practices.
 
 Step 8: Data Monitoring and CloudWatch
-![image](https://github.com/user-attachments/assets/753cdd4e-71e5-48a0-9db4-3a872f41bcf9)
-![image](https://github.com/user-attachments/assets/fe9da594-0538-4555-9563-8a7394ca3774)
 
+/
+![image](https://github.com/user-attachments/assets/753cdd4e-71e5-48a0-9db4-3a872f41bcf9)
+/
+
+![image](https://github.com/user-attachments/assets/fe9da594-0538-4555-9563-8a7394ca3774)
+/
 
 
 To ensure the system remained efficient and secure over time:
