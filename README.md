@@ -19,6 +19,7 @@ This dataset was stored in S3 and cleeaned and structured through AWS Glue-Datab
 
 a similar process was used on all 3 datasets
 the data was then checked for sensitive information and for data quality in AWS visual ETL
+   ![image](https://github.com/user-attachments/assets/9a4ddf0c-a58d-42b7-8318-8363e3afde9a)
 here’s a breakdown of the operations that have been applied:
 
     Data Sources:
@@ -45,10 +46,11 @@ here’s a breakdown of the operations that have been applied:
 
     Final Transformations:
         Change Schema: Schema transformations are applied again before the data is sent to an Amazon S3 bucket as the final output.
-        ![image](https://github.com/user-attachments/assets/9a4ddf0c-a58d-42b7-8318-8363e3afde9a)
+     
 
 
 This flow demonstrates how the system is handling the data, detecting sensitive information, checking data quality, and routing the data based on evaluation results before storing it back in S3.
+        ![image](https://github.com/user-attachments/assets/9456723d-7dc8-4a08-896b-0f4da412c721)
 steps taken to determine students who are "Required to Withdraw" based on their GPA across three terms. Here's a breakdown:
 
     Data Sources:
@@ -63,7 +65,7 @@ steps taken to determine students who are "Required to Withdraw" based on their 
 
     Schema Change and Final Target:
         The filtered data then goes through another schema transformation before being written back to an S3 bucket as the final output.
-        ![image](https://github.com/user-attachments/assets/9456723d-7dc8-4a08-896b-0f4da412c721)
+
 
 
 This process identifies the students who consistently underperformed (below a 2.0 GPA for all terms) and flags them as required to withdraw.
