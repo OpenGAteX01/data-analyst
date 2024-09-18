@@ -245,5 +245,121 @@ By separating the responsibilities between the general and web servers, the proj
 ![image](https://github.com/user-attachments/assets/d088d4da-9ba0-470b-8506-dec2209d4131)
 
  /
-
+**Project: Property Tax Report Analysis and Implementation Using AWS**
  /
+ In this project, I focused on creating a secure, scalable, and automated data analytics solution for the City of Vancouver’s Property Tax Report dataset. My role involved designing and implementing a data pipeline that utilized a variety of AWS services to ensure the data was processed efficiently, securely, and in a cost-effective manner. Below is an overview of the steps I took to achieve this:
+Data Overview
+
+The dataset I worked with contained property tax reports for the year 2024, specifically focusing on the Limited Agriculture zone classification. The key columns included tax levy, legal type (LAND and STRATA), and property value data. My objective was to cleanse, transform, and analyze the data to derive insights related to tax distribution and ensure the dataset adhered to strict governance standards due to its sensitive nature.
+The data used for the analysis is the taxes levied by legal type for the zone classification of limited agriculture as available on the city of Vancouver portal
+ 
+Source: https://opendata.vancouver.ca/explore/embed/dataset/property-tax-report/analyze/?sort=-tax_assessment_year&refine.report_year=2024&refine.zoning_classification=Limited%20Agriculture&dataChart=eyJxdWVyaWVzIjpbeyJjb25maWciOnsiZGF0YXNldCI6InByb3BlcnR5LXRheC1yZXBvcnQiLCJvcHRpb25zIjp7InNvcnQiOiItdGF4X2Fzc2Vzc21lbnRfeWVhciIsInJlZmluZS5yZXBvcnRfeWVhciI6IjIwMjQiLCJyZWZpbmUuem9uaW5nX2NsYXNzaWZpY2F0aW9uIjoiTGltaXRlZCBBZ3JpY3VsdHVyZSJ9fSwiY2hhcnRzIjpbeyJhbGlnbk1vbnRoIjp0cnVlLCJ0eXBlIjoicGllIiwiZnVuYyI6IlNVTSIsInlBeGlzIjoidGF4X2xldnkiLCJzY2llbnRpZmljRGlzcGxheSI6dHJ1ZSwiY29sb3IiOiJyYW5nZS1jdXN0b20iLCJwb3NpdGlvbiI6ImNlbnRlciJ9XSwieEF4aXMiOiJsZWdhbF90eXBlIiwibWF4cG9pbnRzIjo1MCwic29ydCI6IiIsInNlcmllc0JyZWFrZG93biI6IiIsInNlcmllc0JyZWFrZG93blRpbWVzY2FsZSI6IiJ9XSwidGltZXNjYWxlIjoiIiwiZGlzcGxheUxlZ2VuZCI6dHJ1ZSwiYWxpZ25Nb250aCI6dHJ1ZX0%3D 
+Legal type	Tax 
+LAND	3717126.62
+STRATA	556507.85
+![image](https://github.com/user-attachments/assets/4bf76d1f-8ddc-4745-9cfc-8bb052db4505)
+
+Step 1: Data Ingestion and Cleansing
+![image](https://github.com/user-attachments/assets/661b51d1-e45e-4f2c-9677-4f70f73efd4f)
+![image](https://github.com/user-attachments/assets/d7a4932b-bd3c-48e3-a32d-db856d979635)
+
+
+Using AWS Glue DataBrew, I performed the following tasks:
+
+    Cleaning the dataset: Removed unnecessary columns like personal identifiers and report years that posed privacy risks.
+    Data type standardization: I ensured that fields like tax levy, land value, and legal type were correctly formatted to avoid any discrepancies during data analysis.
+
+Once cleaned, the data was stored in an S3 bucket, which served as the source for further processing and analysis.
+Step 2: Data Security and Protection
+
+Due to the sensitivity of the property tax data, I implemented the following security measures:
+
+    KMS Encryption: A KMS key was generated and applied to encrypt the S3 bucket containing both raw and processed data. This ensured that the data remained secure both at rest and in transit.
+    IAM Roles: I adhered to the principle of least privilege, ensuring that only authorized users could access or manipulate the data, further reducing the risk of breaches.
+    Backup and Replication: I established S3 replication rules to create an automatic backup of the S3 bucket in a different region. This ensured data redundancy in case of disasters or regional outages.
+
+Step 3: ETL Pipeline Development
+![image](https://github.com/user-attachments/assets/af6c712f-a862-463c-9d2e-55304e14c44a)
+
+
+I used AWS Glue to automate the extraction, transformation, and loading (ETL) processes:
+
+    Data transformation: Applied filtering to focus on 2024 data for the Limited Agriculture zone and aggregated tax levies based on legal type (LAND, STRATA).
+    Data quality checks: Implemented automatic checks for data accuracy and completeness to ensure that only valid records were included in the final analysis.
+    Scheduled automation: The ETL pipeline was scheduled to run automatically, allowing new data to be processed and analyzed without manual intervention.
+
+Step 4: Data Governance and Privacy
+![image](https://github.com/user-attachments/assets/a1c61e22-9027-484b-bc89-7cac4eecbb1d)
+![image](https://github.com/user-attachments/assets/32d84578-3ae9-42b4-b06c-bba3718e127c)
+
+
+Data governance was a top priority for this project:
+
+    I set up a trusted zone in the S3 bucket where only verified and validated data was stored after the ETL process.
+    AWS Glue was used to continuously monitor data quality and ensure privacy standards were met, especially by detecting and eliminating sensitive information from the dataset.
+    A visual ETL workflow was designed to provide real-time monitoring of jobs and transformations.
+
+Step 5: Data Analysis Using AWS Athena
+![image](https://github.com/user-attachments/assets/c9aec79e-b053-4d22-a04f-dfa0fda6a5e1)
+
+![image](https://github.com/user-attachments/assets/ba003650-ba22-4a11-9e1b-22028d9c34d4)
+![image](https://github.com/user-attachments/assets/99df89b6-f775-44a1-bbb8-17032e4291d1)
+
+
+Once the data was prepared and loaded into the curated folder, I used AWS Athena for querying and analysis:
+
+    The key analysis involved calculating the total tax levy for each legal type (LAND and STRATA).
+
+    Example query:
+
+    sql
+
+    SELECT legal_type, SUM(tax_levy) AS total_tax
+    FROM property_tax_report
+    WHERE zoning_classification = 'Limited Agriculture'
+    GROUP BY legal_type;
+
+    This allowed me to derive insights regarding tax distribution, which helped inform decisions about tax contributions across property types.
+
+Step 6: Data Visualization Using Amazon QuickSight
+![image](https://github.com/user-attachments/assets/dfce4c10-76df-4ca6-a39d-2b0959cd004d)
+
+
+To make the data more accessible to stakeholders, I used Amazon QuickSight to create interactive visualizations:
+
+    Pie charts visualized the percentage contribution of LAND and STRATA legal types to the overall tax levy.
+    Bar charts compared land and improvement values across different properties, providing a comprehensive view of the tax structure.
+
+Step 7: Cost Optimization and Sustainability
+
+Cost and sustainability were critical considerations for this project:
+
+    S3 Intelligent-Tiering was used to automatically move infrequently accessed data to lower-cost storage tiers, reducing overall storage costs.
+    CloudWatch alarms were configured to monitor costs related to S3, Athena, and EC2, with notifications sent if costs exceeded a set threshold (e.g., $45 USD).
+    By leveraging AWS-managed infrastructure, the solution helped reduce the carbon footprint by optimizing energy consumption and relying on AWS's sustainable practices.
+
+Step 8: Data Monitoring and CloudWatch
+![image](https://github.com/user-attachments/assets/753cdd4e-71e5-48a0-9db4-3a872f41bcf9)
+![image](https://github.com/user-attachments/assets/fe9da594-0538-4555-9563-8a7394ca3774)
+
+
+
+To ensure the system remained efficient and secure over time:
+
+    AWS CloudWatch was used to monitor key metrics like storage usage, service costs, and overall system performance.
+    CloudTrail tracked user activities and API calls, providing a detailed audit trail that enhanced data governance and security compliance.
+
+Step 9: Data Protection in the Long Term
+
+To protect data even after processing:
+
+    Data stored in the S3 bucket remained encrypted using KMS, ensuring long-term security.
+    The replication rules ensured that a backup of the data existed in a secondary location, preserving data integrity and availability in case of regional outages.
+
+Key Takeaways and Results
+
+Through this project, I successfully demonstrated the use of AWS services for securely managing sensitive data while optimizing performance and cost. Key outcomes included:
+
+    Efficient data processing: The automated ETL pipeline ensured data was processed and transformed without manual intervention, saving time and reducing errors.
+    Data security: The use of KMS encryption and IAM roles ensured data privacy and protection at every stage.
+    Scalability and sustainability: By leveraging AWS's managed services, the system was highly scalable and minimized energy consumption, contributing to the city’s sustainability goals.
